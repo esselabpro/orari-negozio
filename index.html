@@ -1,0 +1,94 @@
+<!-- ATTENZIONE PAGINA PRIVATA - PROPRIETA' DI SFRISO PAOLO -->
+
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orari di Apertura</title>
+
+    <link rel="stylesheet" href="Style_Orario.css">
+
+</head>
+
+<body>
+
+    <div class="orari-card">
+        <div id="statusBanner" class="status-banner">
+            <div id="statusText" class="status-text">Controllo orario...</div>
+            <div id="countdownText" class="countdown-text">Attendere prego...</div>
+        </div>
+
+        <div class="timetable">
+
+            <div class="day-block" id="day-1">
+                <span class="day-name">Lunedì</span>
+                <div class="hours-container">
+                    <span class="hours-block">Mattina: 07:30 - 12:50</span>
+                    <span class="hours-block">Pome: 16:00 - 19:30</span>
+                </div>
+            </div>
+
+            <div class="day-block" id="day-2">
+                <span class="day-name">Martedì</span>
+                <div class="hours-container">
+                    <span class="hours-block">Mattina: 07:30 - 12:50</span>
+                    <span class="hours-block">Pome: 16:00 - 19:30</span>
+                </div>
+            </div>
+
+            <div class="day-block" id="day-3">
+                <span class="day-name">Mercoledì</span>
+                <div class="hours-container">
+                    <span class="hours-block">Mattina: 07:30 - 12:50</span>
+                    <span class="hours-block">Pome: 16:00 - 19:30</span>
+                </div>
+            </div>
+
+            <div class="day-block" id="day-4">
+                <span class="day-name">Giovedì</span>
+                <div class="hours-container">
+                    <span class="hours-block">Mattina: 07:30 - 12:50</span>
+                    <span class="hours-block">Pome: 16:00 - 19:30</span>
+                </div>
+            </div>
+
+            <div class="day-block" id="day-5">
+                <span class="day-name">Venerdì</span>
+                <div class="hours-container">
+                    <span class="hours-block">Mattina: 07:30 - 12:50</span>
+                    <span class="hours-block">Pome: 16:00 - 19:30</span>
+                </div>
+            </div>
+
+            <div class="day-block" id="day-6">
+                <span class="day-name">Sabato</span>
+                <div class="hours-container">
+                    <span class="hours-block">Mattina: 07:30 - 12:50</span>
+                    <span class="closed-text">Pomeriggio Chiuso</span>
+                </div>
+            </div>
+
+            <div class="day-block" id="day-0" style="color: #e63946;">
+                <span class="day-name" style="color: #e63946;">Domenica</span>
+                <div class="hours-container">
+                    <span class="closed-text" style="color: #e63946; font-weight: bold;">CHIUSO TUTTO IL GIORNO</span>
+                </div>
+            </div>
+
+        </div>
+        <center>
+            <button onclick="inserimentoScacchi()">clicca per entrare</button>
+            <br><br>
+        </center>
+        
+
+    </div>
+
+
+
+    <script src="Js_Orario.js"></script>
+</body>
+
+</html>
