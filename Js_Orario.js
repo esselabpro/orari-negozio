@@ -1,3 +1,5 @@
+// ATTENZIONE PROPRIETA' PRIVATA SFRISO PAOLO //
+
 function calcolaStato() {
     const oraSolare = new Date();
     const giorno = oraSolare.getDay();
