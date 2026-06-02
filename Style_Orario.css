@@ -21,15 +21,33 @@ body {
 }
 
 button {
-    background: rgba(99, 242, 99, 0.717);
-    padding: 6px;
+    background: rgba(99, 242, 99, 0.85); /* Leggermente più visibile rispetto allo sfondo */
+    padding: 10px 22px;                 /* Più cicciotto e facile da premere col dito */
     color: #0f0646;
-    font-weight: 600;
-    font-style: verdana;
+    font-weight: 700;
+    font-family: 'Segoe UI', Roboto, sans-serif; /* Corretto: ora usa i font di sistema puliti */
     font-size: 16px;
     border: 3px solid #0f0646 ;
-    border-radius: 5px;
+    border-radius: 8px;                  /* Angoli leggermente più arrotondati */
+    cursor: pointer;                     /* Fa apparire la manina col dito */
+    transition: transform 0.2s ease;     /* Effetto movimento quando viene premuto */
+}
 
+button:active {
+    transform: scale(0.95);              /* Si schiaccia leggermente quando ci fai clic sopra */
+}
+
+.homeText {
+    width: 100%;
+    max-width: 360px;
+    /* Più stretta per i cellulari */
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    overflow: hidden;
 }
 
 /* CARD AGGIUSTATA PER SCHERMI STRETTI */
