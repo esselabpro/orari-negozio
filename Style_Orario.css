@@ -58,11 +58,11 @@ button:active {
 }
 
 .logo img {
-    max-width: 100%;  /* Impedisce all'immagine di uscire dal box, ridimensionandola se lo schermo è piccolo */
-    height: auto;     /* Mantiene le proporzioni corrette (altezza proporzionale alla larghezza) */
-    display: block;   /* Rimuove spazi vuoti indesiderati sotto l'immagine */
-    margin: 0 auto;   /* Centra l'immagine perfettamente */
-    border-radius: 12px; /* Se vuoi dare un leggero angolo arrotondato anche ai bordi dell'immagine stessa */
+    max-width: 100% !important;  /* Forza il telefono a non far uscire l'immagine dal box */
+    height: auto !important;     /* Forza le proporzioni corrette */
+    display: block;
+    margin: 0 auto;
+    border-radius: 12px;
 }
 
 /* CARD AGGIUSTATA PER SCHERMI STRETTI */
