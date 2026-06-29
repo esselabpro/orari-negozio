@@ -25,35 +25,40 @@ function numeroInLettere(num) {
 
         return testoDecina + testoUnita;
     }
-
-    return num; // Sicurezza per numeri superiori a 99
+    return num; // per numeri superiori a 99
 }
 
 // FUNZIONE PRINCIPALE: Carica il testo, calcola gli anni e formatta l'HTML
 async function caricaStoriaDinamica() {
+    let commento = "quasi";
     try {
-        // 1. Calcolo degli anni passati dal 4/12/1999
+        // 1. Calcolo degli anni passati dal 4/12/1999 e Logica del Commento sul testo es. 'quasi ventisette'
         const dataCorrente = new Date();
 
         const annoCorrente = dataCorrente.getFullYear();
         const meseCorrente = (dataCorrente.getMonth())+1;
         const giornoCorrente = dataCorrente.getDate();
-        //const annoCorrente = 2020;
+
+        // script per le prove:
+        //const annoCorrente = 2026;
         //const meseCorrente = 12;
-        //const giornoCorrente = 4;
+        //const giornoCorrente = 1;
 
         const annoFondazione = 1999;
         const meseFondazione = 12;
         const giornoFondazione = 4;
 
         let anniPassati = annoCorrente - annoFondazione;
-        if (meseCorrente < meseFondazione){
+        if ((meseFondazione - meseCorrente) > 3){
             anniPassati = anniPassati-1;
+            commento = "più di";
         }
-        if (meseCorrente == meseFondazione && giornoCorrente < giornoFondazione){
-            anniPassati = anniPassati-1;
+        if (meseCorrente == meseFondazione && giornoCorrente == giornoFondazione){
+            commento = "esattamente";
         }
-
+        if (meseCorrente == meseFondazione && giornoCorrente > giornoFondazione){
+            commento = "più di";
+        }
         //console.log(annoCorrente);
         //console.log(meseCorrente);
         //console.log(giornoCorrente);
@@ -61,6 +66,7 @@ async function caricaStoriaDinamica() {
 
         // Convertiamo il numero in parola (es: 27 -> "ventisei")
         const anniInLettere = numeroInLettere(anniPassati);
+        const commentoEanniInLettere = commento + " " + anniInLettere;
 
         // 2. Recupero del file storia.txt dalla cartella assets
         const risposta = await fetch('assets/storia.txt');
@@ -69,7 +75,7 @@ async function caricaStoriaDinamica() {
         let testoOriginale = await risposta.text();
 
         // 3. Sostituzione globale di tutti i tag [ANNI] con il testo in lettere
-        let testoModificato = testoOriginale.replace(/\[ANNI\]/g, anniInLettere);
+        let testoModificato = testoOriginale.replace(/\[ANNI\]/g, commentoEanniInLettere);
 
         // 4. Dividiamo il testo in base alle righe, ripulendo gli spazi vuoti
         const righe = testoModificato.split('\n').map(r => r.trim()).filter(r => r !== "");
