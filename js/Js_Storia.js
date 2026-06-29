@@ -32,12 +32,34 @@ function numeroInLettere(num) {
 // FUNZIONE PRINCIPALE: Carica il testo, calcola gli anni e formatta l'HTML
 async function caricaStoriaDinamica() {
     try {
-        // 1. Calcolo degli anni passati dal 1999
-        const annoCorrente = new Date().getFullYear();
+        // 1. Calcolo degli anni passati dal 4/12/1999
+        const dataCorrente = new Date();
+
+        const annoCorrente = dataCorrente.getFullYear();
+        const meseCorrente = (dataCorrente.getMonth())+1;
+        const giornoCorrente = dataCorrente.getDate();
+        //const annoCorrente = 2020;
+        //const meseCorrente = 12;
+        //const giornoCorrente = 4;
+
         const annoFondazione = 1999;
-        const anniPassati = annoCorrente - annoFondazione;
-        
-        // Convertiamo il numero in parola (es: 27 -> "ventisette")
+        const meseFondazione = 12;
+        const giornoFondazione = 4;
+
+        let anniPassati = annoCorrente - annoFondazione;
+        if (meseCorrente < meseFondazione){
+            anniPassati = anniPassati-1;
+        }
+        if (meseCorrente == meseFondazione && giornoCorrente < giornoFondazione){
+            anniPassati = anniPassati-1;
+        }
+
+        //console.log(annoCorrente);
+        //console.log(meseCorrente);
+        //console.log(giornoCorrente);
+        //console.log(anniPassati);
+
+        // Convertiamo il numero in parola (es: 27 -> "ventisei")
         const anniInLettere = numeroInLettere(anniPassati);
 
         // 2. Recupero del file storia.txt dalla cartella assets
