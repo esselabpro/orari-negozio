@@ -1,0 +1,97 @@
+// ATTENZIONE PROPRIETA' PRIVATA SFRISO PAOLO //
+
+// FUNZIONE DI SUPPORTO: Converte un numero da 1 a 99 in lettere in italiano
+function numeroInLettere(num) {
+    if (num === 0) return "zero";
+
+    const unita = ["", "uno", "due", "tre", "quattro", "cinque", "sei", "sette", "otto", "nove"];
+    const speciali = ["dieci", "undici", "dodici", "tredici", "quattordici", "quindici", "sedici", "diciassette", "diciotto", "diciannove"];
+    const decine = ["", "", "venti", "trenta", "quaranta", "cinquanta", "sessanta", "settanta", "ottanta", "novanta"];
+
+    if (num < 10) return unita[num];
+    if (num >= 10 && num < 20) return speciali[num - 10];
+
+    if (num >= 20 && num < 100) {
+        const d = Math.floor(num / 10); // Estrae la decina
+        const u = num % 10;             // Estrae l'unità
+
+        let testoDecina = decine[d];
+        let testoUnita = unita[u];
+
+        // Regola fonetica italiana: elisione con uno e otto (es: ventuno, trentotto)
+        if (u === 1 || u === 8) {
+            testoDecina = testoDecina.slice(0, -1); 
+        }
+
+        return testoDecina + testoUnita;
+    }
+
+    return num; // Sicurezza per numeri superiori a 99
+}
+
+// FUNZIONE PRINCIPALE: Carica il testo, calcola gli anni e formatta l'HTML
+async function caricaStoriaDinamica() {
+    try {
+        // 1. Calcolo degli anni passati dal 1999
+        const annoCorrente = new Date().getFullYear();
+        const annoFondazione = 1999;
+        const anniPassati = annoCorrente - annoFondazione;
+        
+        // Convertiamo il numero in parola (es: 27 -> "ventisette")
+        const anniInLettere = numeroInLettere(anniPassati);
+
+        // 2. Recupero del file storia.txt dalla cartella assets
+        const risposta = await fetch('assets/storia.txt');
+        if (!risposta.ok) throw new Error("File storia.txt non trovato nella cartella assets");
+
+        let testoOriginale = await risposta.text();
+
+        // 3. Sostituzione globale di tutti i tag [ANNI] con il testo in lettere
+        let testoModificato = testoOriginale.replace(/\[ANNI\]/g, anniInLettere);
+
+        // 4. Dividiamo il testo in base alle righe, ripulendo gli spazi vuoti
+        const righe = testoModificato.split('\n').map(r => r.trim()).filter(r => r !== "");
+
+        let htmlFinale = "";
+
+        // 5. Analizziamo riga per riga per applicare la formattazione corretta
+        righe.forEach((riga, indice) => {
+            if (indice === 0) {
+                // La prima riga è il Titolo Principale
+                htmlFinale += `<h1 class="titolo-storia">${riga}</h1>`;
+            } 
+            else if (indice === 1) {
+                // La seconda riga è il Sottotitolo
+                htmlFinale += `<h2 class="sottotitolo-storia">${riga}</h2>`;
+            } 
+            else if (riga === "Paolo e Luisa.") {
+                // Se incontra la firma finale, applica la classe firma
+                htmlFinale += `<p class="firma-storia"><strong>${riga}</strong></p>`;
+            } 
+            else if (riga.includes("Paolo:") || riga.includes("Luisa:") || riga.includes("Insieme:")) {
+                // Se la riga inizia con uno dei tuoi titoli dei paragrafi, diventa un H3 blu
+                htmlFinale += `<h3 class="titolo-paragrafo">${riga}</h3>`;
+            } 
+            else {
+                // Tutto il resto è testo normale dei paragrafi
+                htmlFinale += `<p class="testo-normale">${riga}</p>`;
+            }
+        });
+
+        // 6. Iniettiamo l'HTML formattato dentro la card della pagina
+        const contenitoreHTML = document.getElementById('testo-storia');
+        if (contenitoreHTML) {
+            contenitoreHTML.innerHTML = htmlFinale;
+        }
+
+    } catch (errore) {
+        console.error("Errore nel caricamento della storia:", errore);
+        const contenitoreHTML = document.getElementById('testo-storia');
+        if (contenitoreHTML) {
+            contenitoreHTML.textContent = "Impossibile caricare la storia del negozio al momento.";
+        }
+    }
+}
+
+// Avviamo lo script quando l'HTML della pagina è completamente pronto
+document.addEventListener('DOMContentLoaded', caricaStoriaDinamica);
