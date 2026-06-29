@@ -20,7 +20,7 @@ function numeroInLettere(num) {
 
         // Regola fonetica italiana: elisione con uno e otto (es: ventuno, trentotto)
         if (u === 1 || u === 8) {
-            testoDecina = testoDecina.slice(0, -1); 
+            testoDecina = testoDecina.slice(0, -1);
         }
 
         return testoDecina + testoUnita;
@@ -36,7 +36,7 @@ async function caricaStoriaDinamica() {
         const dataCorrente = new Date();
 
         const annoCorrente = dataCorrente.getFullYear();
-        const meseCorrente = (dataCorrente.getMonth())+1;
+        const meseCorrente = (dataCorrente.getMonth()) + 1;
         const giornoCorrente = dataCorrente.getDate();
 
         // script per le prove:
@@ -49,14 +49,14 @@ async function caricaStoriaDinamica() {
         const giornoFondazione = 4;
 
         let anniPassati = annoCorrente - annoFondazione;
-        if ((meseFondazione - meseCorrente) > 3){
-            anniPassati = anniPassati-1;
+        if ((meseFondazione - meseCorrente) > 3) {
+            anniPassati = anniPassati - 1;
             commento = "più di";
         }
-        if (meseCorrente == meseFondazione && giornoCorrente == giornoFondazione){
+        if (meseCorrente == meseFondazione && giornoCorrente == giornoFondazione) {
             commento = "esattamente";
         }
-        if (meseCorrente == meseFondazione && giornoCorrente > giornoFondazione){
+        if (meseCorrente == meseFondazione && giornoCorrente > giornoFondazione) {
             commento = "più di";
         }
         //console.log(annoCorrente);
@@ -69,7 +69,10 @@ async function caricaStoriaDinamica() {
         const commentoEanniInLettere = commento + " " + anniInLettere;
 
         // 2. Recupero del file storia.txt dalla cartella assets
-        const risposta = await fetch('assets/storia.txt');
+        // PRIMA ERA COSÌ:
+        // const risposta = await fetch('assets/storia.txt');
+        // MODIFICATO COSÌ PER FAR APRIRE PAGINE GIA' IN CACHE E AVERLE SEMPRE AGGIORNATE:
+        const risposta = await fetch('assets/storia.txt?v=' + new Date().getTime());
         if (!risposta.ok) throw new Error("File storia.txt non trovato nella cartella assets");
 
         let testoOriginale = await risposta.text();
@@ -87,19 +90,19 @@ async function caricaStoriaDinamica() {
             if (indice === 0) {
                 // La prima riga è il Titolo Principale
                 htmlFinale += `<h1 class="titolo-storia">${riga}</h1>`;
-            } 
+            }
             else if (indice === 1) {
                 // La seconda riga è il Sottotitolo
                 htmlFinale += `<h2 class="sottotitolo-storia">${riga}</h2>`;
-            } 
+            }
             else if (riga === "Paolo e Luisa.") {
                 // Se incontra la firma finale, applica la classe firma
                 htmlFinale += `<p class="firma-storia"><strong>${riga}</strong></p>`;
-            } 
+            }
             else if (riga.includes("Paolo:") || riga.includes("Luisa:") || riga.includes("Insieme:")) {
                 // Se la riga inizia con uno dei tuoi titoli dei paragrafi, diventa un H3 blu
                 htmlFinale += `<h3 class="titolo-paragrafo">${riga}</h3>`;
-            } 
+            }
             else {
                 // Tutto il resto è testo normale dei paragrafi
                 htmlFinale += `<p class="testo-normale">${riga}</p>`;
